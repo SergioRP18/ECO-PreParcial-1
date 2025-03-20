@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Register.css">
+    <title>Marco - Polo</title>
+</head>
+<body>
+    <h1>Bienvenido a Marco - Polo</h1>
+    
+    <div id="registro">
+        <h2>Registro de Jugadores</h2>
+        <form id="registroForm">
+            <input type="text" id="username" placeholder="Ingresa tu nombre" required>
+            <button type="submit">Unirme al juego</button>
+        </form>
+    </div>
+
+    <div id="game" style="display: none;">
+        <p id="role"></p>
+        <button id="gritarMarco" style="display: none;">Gritar Marco</button>
+        <button id="gritarPolo" style="display: none;">Gritar Polo</button>
+    </div>
+
+    <div id="polos">
+        <p>Polos que se gritaron:</p>
+        <ul id="listaPolos"></ul>
+    </div>
+
+    <div id="resultado" style="display: none;">
+        <h2 id="mensajeResultado"></h2>
+        <button id="reiniciarJuego">Reiniciar el juego</button>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./client.js"></script>
+</body>
+</html>
