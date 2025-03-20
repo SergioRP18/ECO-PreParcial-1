@@ -1,9 +1,9 @@
-const { assignRoles } = require('./Logicgame');
-
-module.exports = {
-    assignRoles: function(users) {
+function assignRoles(users){
         const roles = ['Marco', 'Polo', 'Polo Especial'];
-        users = users.map(user => ({ ...user, role: roles.pop() }));
+        users.forEach((user, index) => {
+            user.role = roles[index];
+        });;
         return users;
     }
-};
+
+module.exports = { assignRoles };

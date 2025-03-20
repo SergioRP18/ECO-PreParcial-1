@@ -37,9 +37,10 @@ registroForm.addEventListener('submit', (e) => {
     .catch(error => console.error('Error:', error));
 });
 
-socket.on('roleAssigned', (role) => {
-    roleElement.textContent = `Tu rol es: ${role}`;
-    if (role === 'Marco') {
+socket.on('roleAssigned', (users) => {
+    const user = users.find(user => user.username === username);
+    roleElement.textContent = `Tu rol es: ${user.role}`;
+    if (user.role === 'Marco') {
         gritarMarcoButton.style.display = 'block';
     } else {
         gritarPoloButton.style.display = 'block';
