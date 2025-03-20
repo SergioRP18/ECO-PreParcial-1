@@ -39,5 +39,10 @@ module.exports = (io) => {
                 io.emit('finJuego', { perdedor: marco.username });
             }
         });
+
+        socket.on('disconnect', () => {
+            users = users.filter(user => user.id !== socket.id);
+            console.log('Usuario desconectado');
+        });
     });
 };

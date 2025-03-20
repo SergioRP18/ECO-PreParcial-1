@@ -5,6 +5,8 @@ const registroDiv = document.getElementById('registro');
 const gameDiv = document.getElementById('game');
 const roleElement = document.getElementById('role');
 const gritarMarcoButton = document.getElementById('gritarMarco');
+console.log(gritarMarcoButton);
+
 const gritarPoloButton = document.getElementById('gritarPolo');
 const listaPolos = document.getElementById('listaPolos');
 const resultadoDiv = document.getElementById('resultado');
@@ -48,10 +50,14 @@ socket.on('roleAssigned', (users) => {
 });
 
 gritarMarcoButton.addEventListener('click', () => {
+    console.log("hi");
+    
     socket.emit('gritarMarco');
 });
 
 gritarPoloButton.addEventListener('click', () => {
+    console.log("hi");
+    
     socket.emit('gritarPolo', username);
 });
 
@@ -75,6 +81,9 @@ socket.on('finJuego', (result) => {
     }
     resultadoDiv.style.display = 'block';
 });
+
+console.log("hola");
+
 
 reiniciarJuegoButton.addEventListener('click', () => {
     location.reload();
