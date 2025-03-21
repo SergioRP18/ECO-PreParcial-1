@@ -21,23 +21,35 @@ module.exports = (io) => {
             io.emit('roleAssigned', users);
         });
 
-        socket.on('gritarMarco', () => {
-            io.emit('marcoGritado');
+        socket.on('gritarMarco', (username) => {
+            io.emit('marcoGritado', username);
         });
 
         socket.on('gritarPolo', (username) => {
             io.emit('poloGritado', username);
+            io.emit('mostrarPolos', users.filter(user => user.role === 'Polo' || user.role === 'Polo Especial').map(user => user.username));
         });
 
         socket.on('seleccionarPolo', (selectedPolo) => {
             const marco = users.find(user => user.role === 'Marco');
             const poloEspecial = users.find(user => user.role === 'Polo Especial');
-
-            if (selectedPolo === poloEspecial.username) {
-                io.emit('finJuego', { ganador: marco.username });
+        
+            if (marco && poloEspecial) {
+                console.log('marco && poloEspecial');
+                
+                if (selectedPolo === poloEspecial.username) {
+                    io.emit('finJuego', { ganador: marco.username });
+                } else {
+                    io.emit('finJuego', { perdedor: marco.username });
+                }
             } else {
-                io.emit('finJuego', { perdedor: marco.username });
+                console.log('Error: Marco o Polo Especial no definidos');
             }
+        });
+
+        socket.on('reiniciarJuego', () => {
+            users = [];
+            io.emit('reiniciarJuegoServidor');
         });
 
         socket.on('disconnect', () => {

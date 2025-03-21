@@ -1,4 +1,4 @@
-const socket = io();
+const socket = io('http://localhost:5050');
 
 const registroForm = document.getElementById('registroForm');
 const registroDiv = document.getElementById('registro');
@@ -47,15 +47,15 @@ socket.on('roleAssigned', (users) => {
     }
 });
 
-gritarMarcoButton.addEventListener('click', () => {   
-    socket.emit('gritarMarco');
+gritarMarcoButton.addEventListener('click', () => {  
+    socket.emit('gritarMarco', username);
 });
 
 gritarPoloButton.addEventListener('click', () => {
     socket.emit('gritarPolo', username);
 });
 
-socket.on('mostrarPolos', (polos) => {
+function mostrarPolos(polos) {
     listaPolos.innerHTML = '';
     polos.forEach(polo => {
         const li = document.createElement('li');
@@ -63,11 +63,17 @@ socket.on('mostrarPolos', (polos) => {
         li.addEventListener('click', () => {
             socket.emit('seleccionarPolo', polo);
         });
-        listaPolos.appendChild(li);
+        listaPolos.appendChild(li); 
     });
+}
+
+socket.on('mostrarPolos', (polos) => {
+    mostrarPolos(polos);
 });
 
 socket.on('finJuego', (result) => {
+    console.log(result);
+    
     if (result.ganador) {
         mensajeResultado.textContent = `¡${result.ganador} ha ganado!`;
     } else {
@@ -79,4 +85,17 @@ socket.on('finJuego', (result) => {
 
 reiniciarJuegoButton.addEventListener('click', () => {
     location.reload();
+    socket.emit('reiniciarJuego')
+});
+
+socket.on('reiniciarJuegoServidor', () => {
+    location.reload();
+});
+
+socket.on('marcoGritado', (username) => {
+    console.log(`${username} ha gritado Marco`);
+});
+
+socket.on('poloGritado', (username) => {
+    console.log(`${username} ha gritado Polo`);
 });
